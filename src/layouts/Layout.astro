@@ -1,5 +1,7 @@
 ---
 import ScrollAnimations from '../components/ScrollAnimations.astro';
+import CookieConsent from '../components/cookie-consent/CookieConsent.astro';
+import translations from '../i18n/translations';
 
 interface Props {
 	title?: string;
@@ -7,13 +9,109 @@ interface Props {
 }
 
 const { 
-	title = "RecipLab — AI Food Recipe Generator from Photos, Text & Clips",
-	description = "Create recipes from photos, text prompts, or short transcriptions with AI."
+	title = translations.en['meta.title'],
+	description = translations.en['meta.description']
 } = Astro.props;
+
+const defaultLang = 'en';
+const translationsJson = encodeURIComponent(JSON.stringify(translations));
+const gaId = import.meta.env.PUBLIC_GA_ID;
+const gtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-NR6H4JTQ';
+const isProd = import.meta.env.PROD;
+const isDev = import.meta.env.DEV;
+const usePartytown = import.meta.env.USE_PARTYTOWN === 'true';
+// Allow enabling cookie consent in development for testing when USE_COOKIECONSENT is not set
+const useCookieConsent = import.meta.env.USE_COOKIECONSENT === 'true' || isDev;
+const gaInlineScript = `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);} 
+gtag('js', new Date());
+${useCookieConsent ? "gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied'});" : ''}
+gtag('config', '${gaId}', { anonymize_ip: true });`;
+
+// Build GTM inline snippet server-side to avoid emitting un-evaluated template literals
+const gtmInline = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');`;
+
+// Build translations script server-side to avoid leaving ${...} in output
+const translationsScript = `(() => {
+	const translations = JSON.parse(decodeURIComponent('${translationsJson}'));
+	const supportedLangs = Object.keys(translations);
+	const defaultLang = '${defaultLang}';
+
+	const getPreferredLang = () => {
+		const stored = localStorage.getItem('reciplab-lang') || localStorage.getItem('lang');
+		if (stored && supportedLangs.includes(stored)) return stored;
+		const browser = navigator.language?.split('-')[0];
+		if (browser && supportedLangs.includes(browser)) return browser;
+		return defaultLang;
+	};
+
+	const applyTranslations = (lang) => {
+		const dict = translations[lang] || translations[defaultLang];
+
+		document.querySelectorAll('[data-i18n]').forEach((node) => {
+			const key = node.getAttribute('data-i18n');
+			const value = dict[key] ?? translations[defaultLang][key];
+			if (!value) return;
+			if (node.getAttribute('data-i18n-html') === 'true') {
+				node.innerHTML = value;
+			} else {
+				node.textContent = value;
+			}
+		});
+
+		document.querySelectorAll('[data-i18n-attr]').forEach((node) => {
+			const attr = node.getAttribute('data-i18n-attr');
+			const key = node.getAttribute('data-i18n');
+			const value = dict[key] ?? translations[defaultLang][key];
+			if (value && attr) {
+				node.setAttribute(attr, value);
+			}
+		});
+
+		const metaTitle = dict['meta.title'] || translations[defaultLang]['meta.title'];
+		const metaDescription = dict['meta.description'] || translations[defaultLang]['meta.description'];
+		if (metaTitle) document.title = metaTitle;
+		const descriptionMeta = document.querySelector('meta[name="description"]');
+		if (descriptionMeta && metaDescription) descriptionMeta.setAttribute('content', metaDescription);
+
+		document.documentElement.setAttribute('lang', lang);
+		// Persist language in both legacy and short keys for compatibility
+		localStorage.setItem('reciplab-lang', lang);
+		localStorage.setItem('lang', lang);
+
+		const selector = document.getElementById('language-selector');
+		const mobileSelector = document.getElementById('language-selector-mobile');
+		if (selector && selector.value !== lang) selector.value = lang;
+		if (mobileSelector && mobileSelector.value !== lang) mobileSelector.value = lang;
+
+		if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+			window.gtag('set', 'user_properties', { language: lang });
+		}
+	};
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const initialLang = getPreferredLang();
+		applyTranslations(initialLang);
+
+		const bindSelector = (id) => {
+			const element = document.getElementById(id);
+			if (!element) return;
+			element.addEventListener('change', (event) => {
+				const selected = event.target.value;
+				if (supportedLangs.includes(selected)) {
+					applyTranslations(selected);
+				}
+			});
+		};
+
+		bindSelector('language-selector');
+		bindSelector('language-selector-mobile');
+	});
+})();`;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang={defaultLang} class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,10 +124,39 @@ const {
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+		{gtmId && (
+			<>
+				<script is:inline set:html={gtmInline}></script>
+			</>
+		)}
+
+		{(isProd || isDev) && gaId && (
+			<>
+					{usePartytown ? (
+					<>
+						<script is:inline type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+							<script is:inline type="text/partytown" set:html={gaInlineScript}></script>
+					</>
+				) : (
+					<>
+						<script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+							<script is:inline set:html={gaInlineScript}></script>
+					</>
+				)}
+			</>
+		)}
 	</head>
 	<body class="bg-background text-foreground font-['Inter',sans-serif] antialiased">
+		{gtmId && (
+			<noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		)}
 		<slot />
 		<ScrollAnimations />
+
+		{useCookieConsent && <CookieConsent />}
+
+		<script is:inline set:html={translationsScript}></script>
 	</body>
 </html>
 

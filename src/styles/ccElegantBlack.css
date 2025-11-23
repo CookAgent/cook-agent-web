@@ -1,0 +1,19 @@
+/* Minimal CookieConsent styles (placeholder) */
+.cookie-consent-wrapper {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+  z-index: 9999;
+}
+.cookie-consent-wrapper button {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}

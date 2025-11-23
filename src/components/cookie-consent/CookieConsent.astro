@@ -1,0 +1,60 @@
+---
+import '../../styles/ccElegantBlack.css';
+// This component initializes vanilla-cookieconsent on the client.
+// The config is inlined here (copied from CookieConsentConfig.ts) so the
+// browser doesn't attempt to dynamically import a TypeScript module at runtime.
+const cookieInit = `(async () => {
+  try {
+    if (typeof window === 'undefined') return;
+    const [{ default: run }] = await Promise.all([
+      import('vanilla-cookieconsent')
+    ]);
+
+    // Inlined config (keeps runtime functions for accept/reject handlers)
+    const config = {
+      guiOptions: {
+        consentModal: { layout: 'box inline', position: 'bottom left' },
+        preferencesModal: { layout: 'box', position: 'right', equalWeightButtons: true, flipButtons: false }
+      },
+      categories: {
+        necessary: { readOnly: true },
+        functionality: {},
+        analytics: {
+          services: {
+            ga4: {
+              label: '[Google Analytics 4](https://marketingplatform.google.com/about/analytics/)',
+              onAccept: () => {
+                try {
+                  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                    window.gtag('consent', 'update', {
+                      ad_storage: 'granted',
+                      ad_user_data: 'granted',
+                      ad_personalization: 'granted',
+                      analytics_storage: 'granted'
+                    });
+                  }
+                } catch (e) {
+                  // ignore if gtag isn't available yet
+                }
+              },
+              onReject: () => {},
+              cookies: [{ name: /^_ga/ }]
+            }
+          }
+        }
+      },
+      language: { default: 'en', autoDetect: 'browser' }
+    };
+
+    if (typeof run === 'function' && config) {
+      run(config);
+    }
+  } catch (e) {
+    console.warn('CookieConsent init failed:', e);
+  }
+})();`;
+---
+
+<div id="cc-container"></div>
+
+<script is:inline type="module" set:html={cookieInit}></script>

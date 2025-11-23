@@ -41,3 +41,15 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## 🌐 Internationalization & Analytics
+
+- **Translations:** All UI strings live in `src/i18n/translations.ts`. The app uses `data-i18n` attributes in components and a small runtime script (in `src/layouts/Layout.astro`) which populates elements and meta tags. To add new text: add a key to `translations.ts` for each language and then add `data-i18n="your.key"` (or `data-i18n-html="true"` when HTML is required) to the element.
+- **Language selection:** The language selector in the header (`#language-selector`) and mobile selector (`#language-selector-mobile`) persist the choice to `localStorage` under `reciplab-lang` and update the page at runtime.
+- **Google Analytics:** To enable Analytics, set `PUBLIC_GA_ID` in your environment to your `G-XXXXXXX` Measurement ID (see `.env.example`). When set, `gtag.js` will be injected via `src/layouts/Layout.astro` and the selected language will be sent as a user property.
+
+Example `.env` (do not commit real keys):
+
+```
+PUBLIC_GA_ID=G-XXXXXXXXXX
+```

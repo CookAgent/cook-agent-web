@@ -1,4 +1,6 @@
 ---
+// Import CookieConsent CSS so the banner is visible and styled correctly
+import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import '../../styles/ccElegantBlack.css';
 // This component initializes vanilla-cookieconsent on the client.
 // The config is inlined here (copied from CookieConsentConfig.ts) so the
@@ -11,7 +13,9 @@ const cookieInit = `(async () => {
     ]);
 
     // Inlined config (keeps runtime functions for accept/reject handlers)
+    // Add 'root' so the consent UI mounts into the '#cc-container' element
     const config = {
+      root: '#cc-container',
       guiOptions: {
         consentModal: { layout: 'box inline', position: 'bottom left' },
         preferencesModal: { layout: 'box', position: 'right', equalWeightButtons: true, flipButtons: false }

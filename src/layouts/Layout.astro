@@ -1,31 +1,31 @@
 ---
-import ScrollAnimations from '../components/ScrollAnimations.astro';
-import CookieConsent from '../components/cookie-consent/CookieConsent.astro';
-import translations from '../i18n/translations';
+import ScrollAnimations from "../components/ScrollAnimations.astro";
+import CookieConsent from "../components/cookie-consent/CookieConsent.astro";
+import translations from "../i18n/translations";
 
 interface Props {
 	title?: string;
 	description?: string;
 }
 
-const { 
-	title = translations.en['meta.title'],
-	description = translations.en['meta.description']
+const {
+	title = translations.en["meta.title"],
+	description = translations.en["meta.description"],
 } = Astro.props;
 
-const defaultLang = 'en';
+const defaultLang = "en";
 const translationsJson = encodeURIComponent(JSON.stringify(translations));
 const gaId = import.meta.env.PUBLIC_GA_ID;
-const gtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-NR6H4JTQ';
+const gtmId = import.meta.env.PUBLIC_GTM_ID || "GTM-NR6H4JTQ";
 const isProd = import.meta.env.PROD;
 const isDev = import.meta.env.DEV;
-const usePartytown = import.meta.env.USE_PARTYTOWN === 'true';
+const usePartytown = import.meta.env.USE_PARTYTOWN === "true";
 // Allow enabling cookie consent in development for testing when USE_COOKIECONSENT is not set
-const useCookieConsent = import.meta.env.USE_COOKIECONSENT === 'true' || isDev;
+const useCookieConsent = import.meta.env.USE_COOKIECONSENT === "true" || isDev;
 const gaInlineScript = `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);} 
 gtag('js', new Date());
-${useCookieConsent ? "gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied'});" : ''}
+${useCookieConsent ? "gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied'});" : ""}
 gtag('config', '${gaId}', { anonymize_ip: true });`;
 
 // Build GTM inline snippet server-side to avoid emitting un-evaluated template literals
@@ -33,7 +33,7 @@ const gtmInline = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
 
 // Build translations script server-side to avoid leaving ${...} in output
 const translationsScript = `(() => {
-	const translations = JSON.parse(decodeURIComponent('${translationsJson}'));
+	const translations = JSON.parse(decodeURIComponent("${translationsJson}"));
 	const supportedLangs = Object.keys(translations);
 	const defaultLang = '${defaultLang}';
 
@@ -119,44 +119,73 @@ const translationsScript = `(() => {
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title}</title>
-		
+
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+			rel="stylesheet"
+		/>
 
-		{gtmId && (
-			<>
-				<script is:inline set:html={gtmInline}></script>
-			</>
-		)}
+		{
+			gtmId && (
+				<>
+					<script is:inline set:html={gtmInline} />
+				</>
+			)
+		}
 
-		{(isProd || isDev) && gaId && (
-			<>
+		{
+			(isProd || isDev) && gaId && (
+				<>
 					{usePartytown ? (
-					<>
-						<script is:inline type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-							<script is:inline type="text/partytown" set:html={gaInlineScript}></script>
-					</>
-				) : (
-					<>
-						<script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-							<script is:inline set:html={gaInlineScript}></script>
-					</>
-				)}
-			</>
-		)}
+						<>
+							<script
+								is:inline
+								type="text/partytown"
+								src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+							/>
+							<script
+								is:inline
+								type="text/partytown"
+								set:html={gaInlineScript}
+							/>
+						</>
+					) : (
+						<>
+							<script
+								async
+								src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+							/>
+							<script is:inline set:html={gaInlineScript} />
+						</>
+					)}
+				</>
+			)
+		}
 	</head>
-	<body class="bg-background text-foreground font-['Inter',sans-serif] antialiased">
-		{gtmId && (
-			<noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-		)}
+	<body
+		class="bg-background text-foreground font-['Inter',sans-serif] antialiased"
+	>
+		{
+			gtmId && (
+				<noscript>
+					<iframe
+						src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+						height="0"
+						width="0"
+						style="display:none;visibility:hidden"
+					/>
+				</noscript>
+			)
+		}
 		<slot />
 		<ScrollAnimations />
 
 		{useCookieConsent && <CookieConsent />}
 
-		<script is:inline set:html={translationsScript}></script>
+		<script is:inline set:html={translationsScript} />
 	</body>
 </html>
 
@@ -164,7 +193,7 @@ const translationsScript = `(() => {
 	html {
 		scroll-behavior: smooth;
 	}
-	
+
 	body {
 		margin: 0;
 		padding: 0;

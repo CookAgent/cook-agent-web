@@ -2,7 +2,7 @@ const es = {
   "meta.title":
     "RecipLab - Generador de recetas con IA desde fotos, texto y clips",
   "meta.description":
-    "Crea recetas a partir de fotos, indicaciones de texto o transcripciones cortas con IA.",
+    "Crea recetas a partir de fotos, indicaciones de texto o videos de redes sociales con IA.",
   "nav.features": "Funciones",
   "nav.plans": "Planes",
   "nav.getStarted": "Empezar",
@@ -13,7 +13,7 @@ const es = {
   "hero.title.line1": "Recetas de comida desde",
   "hero.title.line2": "fotos, texto o clips",
   "hero.subtitle":
-    'Convierte ingredientes, fotos o transcripciones de redes sociales en <span class="font-semibold text-primary-600">platos paso a paso</span>. Empieza gratis y pasa a Pro para límites más altos.',
+    'Convierte ingredientes, fotos y videos de redes sociales en <span class="font-semibold text-primary-600">platos paso a paso</span>.',
   "hero.download": "Descargar app",
   "hero.seeFeatures": "Ver funciones",
   "hero.trusted": "Confiada por cocineros caseros de todo el mundo",
@@ -22,14 +22,14 @@ const es = {
   "hero.recipes": "50K+ recetas generadas",
   "features.title": "Genera recetas a tu manera",
   "features.subtitle":
-    "Recetas desde fotos, texto o transcripciones sociales: rápido, preciso y adaptado a ti.",
+    "Recetas desde fotos, texto o videos de redes sociales: rápido, preciso y adaptado a ti.",
   "features.photo.title": "Desde fotos",
   "features.photo.body":
     "Haz una foto de ingredientes o de un plato y recibe una receta a medida con pasos claros. Nuestra IA analiza tu foto y crea instrucciones personalizadas.",
   "features.text.title": "Desde indicaciones de texto",
   "features.text.body":
     "Describe lo que tienes o lo que se te antoja: RecipLab crea la receta al instante. Solo escribe tus ingredientes o el plato deseado y deja que la IA haga el resto.",
-  "features.transcription.title": "Desde transcripciones cortas",
+  "features.transcription.title": "Desde videos de redes sociales",
   "features.transcription.body":
     "Pega una transcripción rápida de un video para recrear el plato con pasos precisos. Perfecto para videos de cocina de redes sociales que quieras probar.",
   "showcase.title": "Experimenta RecipLab",
@@ -54,7 +54,7 @@ const es = {
   "showcase.simple.point3": "Integración de lista de compras",
   "plans.title": "Planes y límites",
   "plans.subtitle":
-    "Elige el plan que se adapte a tus necesidades culinarias. Todos los planes incluyen generación de recetas desde fotos, indicaciones de texto y transcripciones de video.",
+    "Elige el plan que se adapte a tus necesidades culinarias. Todos los planes incluyen generación de recetas desde fotos, indicaciones de texto y videos de redes sociales.",
   "plans.apprentice.title": "Apprentice",
   "plans.apprentice.price": "€0",
   "plans.apprentice.per": "/mes",
@@ -93,7 +93,7 @@ const es = {
   "plans.include4": "Información nutricional",
   "cta.title": "Cocina más inteligente con IA",
   "cta.subtitle":
-    "Descarga RecipLab. Empieza gratis y pasa a Pro para mayores límites mensuales de generación.",
+    "Descarga RecipLab y empieza gratis ahora!",
   "cta.downloadFor": "Descargar para",
   "cta.ios": "iOS",
   "cta.android": "Android",
@@ -101,7 +101,7 @@ const es = {
   "cta.users": "10K+ usuarios",
   "cta.free": "Empieza gratis",
   "footer.description":
-    "Recetas con IA a partir de fotos, texto y transcripciones de video. Cocina de forma más inteligente.",
+    "Recetas con IA a partir de fotos, texto y videos de redes sociales. Cocina de forma más inteligente.",
   "footer.product": "Producto",
   "footer.legal": "Legal",
   "footer.features": "Funciones",
@@ -119,7 +119,7 @@ const es = {
         <p>Al acceder o utilizar el sitio web, la aplicación móvil o los servicios de RecipLab (colectivamente, el "Servicio"), usted acepta estar sujeto a estos Términos de Servicio ("Términos"). Si no está de acuerdo con estos Términos, no podrá utilizar el Servicio.</p>
 
         <h2>2. Descripción del Servicio</h2>
-        <p>RecipLab proporciona una plataforma de generación y gestión de recetas impulsada por IA. El Servicio permite a los usuarios generar recetas a partir de fotos, texto y transcripciones de video, crear listas de compras y gestionar planes de comidas.</p>
+        <p>RecipLab proporciona una plataforma de generación y gestión de recetas impulsada por IA. El Servicio permite a los usuarios generar recetas a partir de fotos, texto y videos de redes sociales, crear listas de compras y gestionar planes de comidas.</p>
 
         <h2>3. Sin Asesoramiento Médico o Nutricional</h2>
         <p>El contenido proporcionado por RecipLab, incluyendo pero no limitado a información nutricional, listas de ingredientes e instrucciones de cocina, es solo para fines informativos. <strong>RecipLab no es un profesional médico ni nutricional.</strong> No debe confiar en esta información como sustituto, ni reemplaza, el asesoramiento, diagnóstico o tratamiento médico profesional.</p>

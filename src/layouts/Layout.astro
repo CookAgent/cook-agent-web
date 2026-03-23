@@ -20,8 +20,8 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID || "GTM-NR6H4JTQ";
 const isProd = import.meta.env.PROD;
 const isDev = import.meta.env.DEV;
 const usePartytown = import.meta.env.USE_PARTYTOWN === "true";
-// Allow enabling cookie consent in development for testing when USE_COOKIECONSENT is not set
-const useCookieConsent = import.meta.env.USE_COOKIECONSENT === "true" || isDev;
+// Enable cookie consent by default; only disable when explicitly set to "false"
+const useCookieConsent = import.meta.env.USE_COOKIECONSENT !== "false";
 const gaInlineScript = `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);} 
 gtag('js', new Date());
@@ -119,6 +119,23 @@ const translationsScript = `(() => {
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title}</title>
+
+		<!-- Open Graph -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="RecipLab" />
+		<meta property="og:image" content={new URL('/og-image.jpg', Astro.site)} />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site)} />
+
+		<!-- Canonical -->
+		<link rel="canonical" href={Astro.url} />
 
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />

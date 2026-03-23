@@ -1,0 +1,36 @@
+#!/bin/sh
+# Pre-commit hook: block .env file commits and detect potential secrets
+
+# Block .env files (except .env.example)
+ENV_FILES=$(git diff --cached --name-only | grep -E '^\\.env' | grep -v '\\.env\\.example$')
+if [ -n "$ENV_FILES" ]; then
+  echo "ERROR: Attempting to commit .env files:"
+  echo "$ENV_FILES"
+  echo ""
+  echo "Remove them from staging with: git reset HEAD <file>"
+  exit 1
+fi
+
+# Warn about potential hardcoded secrets in staged files
+SECRETS_PATTERN='(sk-[a-zA-Z0-9]{20,}|sk_live_|pk_live_|appl_[a-zA-Z0-9]{20,}|lsv2_pt_|tvly-|ghp_[a-zA-Z0-9]{36})'
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+if [ -n "$STAGED_FILES" ]; then
+  # Exclude hook scripts and only match real secrets (not patterns/placeholders)
+  FILTERED_FILES=$(echo "$STAGED_FILES" | grep -v '\.githooks/')
+  if [ -n "$FILTERED_FILES" ]; then
+    MATCHES=$(echo "$FILTERED_FILES" | xargs grep -lE "$SECRETS_PATTERN" 2>/dev/null | while read -r f; do
+      # Skip files where matches are only placeholders (e.g. tvly-...)
+      if grep -E "$SECRETS_PATTERN" "$f" | grep -qvE '\.\.\.'; then
+        echo "$f"
+      fi
+    done)
+  fi
+  if [ -n "$MATCHES" ]; then
+    echo "WARNING: Potential secrets detected in staged files:"
+    echo "$MATCHES"
+    echo ""
+    echo "Review these files before committing."
+    echo "To bypass this check (NOT recommended): git commit --no-verify"
+    exit 1
+  fi
+fi

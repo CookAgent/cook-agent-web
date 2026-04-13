@@ -20,7 +20,9 @@ export default defineConfig({
     },
   },
 
-  // Root → default locale. Static redirect, no SSR needed.
+  // Astro requires a root redirect when `prefixDefaultLocale: true`. Vercel's
+  // edge redirect in `vercel.json` fires first (308), so the static HTML
+  // fallback emitted here is never actually served to visitors.
   redirects: {
     '/': '/en/',
   },

@@ -10,127 +10,156 @@ const { lang = defaultLocale } = Astro.props;
 const t = translations[lang] ?? translations[defaultLocale];
 ---
 
-<section
-  class="relative bg-neutral-100 overflow-hidden pt-28 pb-20 md:pt-32 md:pb-24 lg:pt-36 lg:pb-28"
->
-  <!-- Soft ambient color washes -->
+<section class="relative bg-neutral-100 overflow-hidden pt-28 pb-24 md:pt-32 md:pb-28 lg:pt-36 lg:pb-36">
+  <!-- Ambient color washes -->
+  <div aria-hidden="true" class="pointer-events-none absolute -top-48 -right-48 w-[620px] h-[620px] rounded-full bg-primary-200/55 blur-3xl"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-secondary-200/45 blur-3xl"></div>
+
+  <!-- Subtle grain overlay for texture -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute -top-48 -right-48 w-[560px] h-[560px] rounded-full bg-primary-200/50 blur-3xl"
-  >
-  </div>
-  <div
-    aria-hidden="true"
-    class="pointer-events-none absolute -bottom-40 -left-40 w-[460px] h-[460px] rounded-full bg-secondary-200/45 blur-3xl"
-  >
-  </div>
+    class="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-multiply"
+    style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22/></filter><rect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/></svg>');"
+  ></div>
 
   <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-    <div
-      class="grid grid-cols-1 lg:grid-cols-12 gap-y-16 gap-x-12 items-center"
-    >
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-y-20 gap-x-12 items-center">
+
       <!-- COPY -->
       <div class="lg:col-span-7 xl:col-span-7 max-w-xl lg:max-w-none">
-        <div
-          class="inline-flex items-center gap-2 rounded-full border border-border bg-surface/70 backdrop-blur px-4 py-1.5 text-sm text-neutral-700 mb-7"
-        >
-          <span
-            class="inline-block w-2 h-2 rounded-full bg-primary-500 animate-pulse"
-          ></span>
-          <span>{t["hero.tagline"]}</span>
+        <!-- Tagline pill -->
+        <div class="inline-flex items-center gap-2 rounded-full bg-surface px-4 py-2 text-sm text-neutral-800 mb-8 shadow-[0_6px_24px_-12px_rgba(198,90,74,0.4)] border border-primary-100">
+          <span class="relative inline-flex">
+            <span class="absolute inset-0 rounded-full bg-primary-500/60 animate-ping"></span>
+            <span class="relative inline-block w-2 h-2 rounded-full bg-primary-500"></span>
+          </span>
+          <span class="font-medium">{t["hero.tagline"]}</span>
         </div>
 
-        <h1
-          class="font-display font-semibold text-neutral-900 mb-7 text-[2.25rem] leading-[1.08] sm:text-4xl sm:leading-[1.05] md:text-5xl lg:text-[3.75rem] lg:leading-[1.02] xl:text-[4.25rem]"
-        >
+        <!-- H1 with hand-drawn underline on the italic line -->
+        <h1 class="font-display font-semibold text-neutral-900 mb-7 text-[2.5rem] leading-[1.02] sm:text-[3rem] sm:leading-[1.0] md:text-[3.5rem] lg:text-[4.25rem] lg:leading-[0.98] xl:text-[4.75rem]">
           <span class="block">{t["hero.title.line1"]}</span>
-          <span class="block italic text-primary-600"
-            >{t["hero.title.line2"]}</span
-          >
-        </h1>
-
-        <p
-          class="text-base sm:text-lg lg:text-xl text-neutral-700 leading-relaxed mb-9 max-w-xl"
-          set:html={t["hero.subtitle"]}
-        />
-
-        <div class="flex flex-col sm:flex-row flex-wrap gap-3 mb-10">
-          <a
-            href="#cta"
-            class="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full bg-neutral-900 text-white font-semibold hover:bg-neutral-800 transition-colors"
-          >
-            {t["hero.download"]}
+          <span class="relative inline-block italic text-primary-600">
+            {t["hero.title.line2"]}
+            <!-- Hand-drawn underline -->
             <svg
-              class="w-4 h-4"
+              aria-hidden="true"
+              class="absolute left-0 right-0 -bottom-2 lg:-bottom-3 w-full h-[14px] lg:h-[18px]"
+              viewBox="0 0 400 18"
+              preserveAspectRatio="none"
               fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
             >
               <path
+                d="M2 12 C 70 4, 150 16, 220 8 S 360 14, 398 6"
+                stroke="currentColor"
+                stroke-width="3.5"
                 stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                class="text-primary-400/70"
+              />
             </svg>
+          </span>
+        </h1>
+
+        <p class="text-base sm:text-lg lg:text-xl text-neutral-700 leading-relaxed mb-10 max-w-xl" set:html={t["hero.subtitle"]} />
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row flex-wrap gap-3 mb-12">
+          <a
+            href="#cta"
+            class="group inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-neutral-900 text-white font-semibold shadow-[0_10px_30px_-12px_rgba(0,0,0,0.5)] hover:bg-neutral-800 hover:translate-y-[-1px] transition-all"
+          >
+            <svg class="w-[18px] h-[18px] text-primary-400 group-hover:text-primary-300 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.847.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"></path>
+            </svg>
+            {t["hero.download"]}
           </a>
           <a
             href="#features"
-            class="inline-flex items-center justify-center px-6 sm:px-7 py-3.5 sm:py-4 rounded-full border border-neutral-300 text-neutral-900 font-semibold hover:border-neutral-900 transition-colors"
+            class="inline-flex items-center justify-center px-7 py-4 rounded-full border border-neutral-300 text-neutral-900 font-semibold hover:border-neutral-900 hover:bg-surface transition-all"
           >
             {t["hero.seeFeatures"]}
           </a>
         </div>
 
-        <!-- Social proof row -->
-        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-          <div class="flex items-center gap-1">
-            {
-              [0, 1, 2, 3, 4].map(() => (
-                <svg
-                  class="w-4 h-4 text-warning-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              ))
-            }
-            <span class="ml-1 font-semibold text-neutral-900"
-              >{t["hero.rating"]}</span
-            >
+        <!-- Social proof: 3 uniform tile cards -->
+        <div class="grid grid-cols-3 gap-3 max-w-xl">
+          <!-- Rating -->
+          <div class="rounded-2xl bg-surface/80 backdrop-blur border border-border p-4 flex items-center gap-3">
+            <div class="flex-shrink-0 w-9 h-9 rounded-xl bg-warning-100 text-warning-600 grid place-items-center">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <div class="text-base font-display font-semibold text-neutral-900 leading-none">{t["hero.rating"]}</div>
+              <div class="text-[11px] text-neutral-500 mt-1 leading-tight">App Store</div>
+            </div>
           </div>
-          <span class="hidden sm:inline h-4 w-px bg-neutral-300"></span>
-          <span class="text-neutral-600">{t["hero.downloads"]}</span>
-          <span class="hidden sm:inline h-4 w-px bg-neutral-300"></span>
-          <span class="text-neutral-600">{t["hero.recipes"]}</span>
+
+          <!-- Downloads -->
+          <div class="rounded-2xl bg-surface/80 backdrop-blur border border-border p-4 flex items-center gap-3">
+            <div class="flex-shrink-0 w-9 h-9 rounded-xl bg-primary-100 text-primary-600 grid place-items-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"></path>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <div class="text-base font-display font-semibold text-neutral-900 leading-none">10K+</div>
+              <div class="text-[11px] text-neutral-500 mt-1 leading-tight truncate">{t["hero.downloads"].replace(/^[\d+K]+\s*/i, "")}</div>
+            </div>
+          </div>
+
+          <!-- Recipes generated -->
+          <div class="rounded-2xl bg-surface/80 backdrop-blur border border-border p-4 flex items-center gap-3">
+            <div class="flex-shrink-0 w-9 h-9 rounded-xl bg-secondary-100 text-secondary-700 grid place-items-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.847.813a4.5 4.5 0 00-3.09 3.09z"></path>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <div class="text-base font-display font-semibold text-neutral-900 leading-none">50K+</div>
+              <div class="text-[11px] text-neutral-500 mt-1 leading-tight truncate">{t["hero.recipes"].replace(/^[\d+K]+\s*/i, "")}</div>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- DEVICE -->
       <div class="lg:col-span-5 xl:col-span-5">
-        <div
-          class="relative mx-auto w-full max-w-[400px] sm:max-w-[440px] lg:max-w-[460px] px-4 py-9"
-        >
-          <!-- Warm backdrop card, tilted -->
+        <div class="relative mx-auto w-full max-w-[420px] sm:max-w-[460px] lg:max-w-[480px] px-6 py-14">
+          <!-- Warm tilted backdrop -->
           <div
             aria-hidden="true"
-            class="absolute inset-2 rounded-[2.75rem] bg-gradient-to-br from-primary-100 to-secondary-100 rotate-[2.5deg]"
-          >
+            class="absolute inset-4 rounded-[2.75rem] bg-gradient-to-br from-primary-100 via-primary-50 to-secondary-100 rotate-[2.5deg]"
+          ></div>
+          <!-- Soft glow under main phone -->
+          <div
+            aria-hidden="true"
+            class="absolute bottom-4 left-1/2 -translate-x-1/2 w-[80%] h-20 rounded-full bg-primary-500/20 blur-2xl"
+          ></div>
+
+          <!-- Secondary phone — tucked behind upper-left, smaller, slight tilt -->
+          <div class="absolute -left-2 sm:-left-6 -top-2 w-[42%] sm:w-[44%] rotate-[-6deg] z-10 pointer-events-none select-none">
+            <div class="relative bg-neutral-900 rounded-[1.5rem] p-[4px] shadow-xl ring-1 ring-neutral-900/10">
+              <div class="absolute top-[4px] left-1/2 -translate-x-1/2 w-14 h-[12px] bg-neutral-900 rounded-b-xl z-10"></div>
+              <div class="relative aspect-[1170/2420] bg-white rounded-[1.2rem] overflow-hidden">
+                <img
+                  src="/app_preview_3.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  class="absolute inset-0 w-full h-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            </div>
           </div>
 
-          <!-- Main phone — behind -->
-          <div class="relative mx-auto w-[78%] sm:w-[76%] z-10">
-            <div
-              class="relative bg-neutral-900 rounded-[2.25rem] p-[5px] shadow-2xl ring-1 ring-neutral-900/10"
-            >
-              <div
-                class="absolute top-[6px] left-1/2 -translate-x-1/2 w-20 h-[18px] bg-neutral-900 rounded-b-2xl z-10"
-              >
-              </div>
-              <div
-                class="relative aspect-[1170/2420] bg-white rounded-[1.85rem] overflow-hidden"
-              >
+          <!-- Main phone -->
+          <div class="relative mx-auto w-[74%] sm:w-[72%] z-20">
+            <div class="relative bg-neutral-900 rounded-[2.25rem] p-[5px] shadow-[0_30px_60px_-20px_rgba(198,90,74,0.35),0_20px_40px_-25px_rgba(0,0,0,0.4)] ring-1 ring-neutral-900/10">
+              <div class="absolute top-[6px] left-1/2 -translate-x-1/2 w-20 h-[18px] bg-neutral-900 rounded-b-2xl z-10"></div>
+              <div class="relative aspect-[1170/2420] bg-white rounded-[1.85rem] overflow-hidden">
                 <img
                   src="/app_preview_1.jpg"
                   alt="RecipLab app — recipe generated from a photo"
@@ -142,34 +171,9 @@ const t = translations[lang] ?? translations[defaultLocale];
               </div>
             </div>
           </div>
-
-          <!-- Secondary phone — smaller, bottom-right, in front (higher z-index), no rotation -->
-          <div
-            class="absolute -right-4 sm:-right-10 bottom-6 w-[50%] sm:w-[52%] z-30 pointer-events-none select-none"
-          >
-            <div
-              class="relative bg-neutral-900 rounded-[1.5rem] p-[4px] shadow-xl ring-1 ring-neutral-900/10"
-            >
-              <div
-                class="absolute top-[4px] left-1/2 -translate-x-1/2 w-14 h-[12px] bg-neutral-900 rounded-b-xl z-10"
-              >
-              </div>
-              <div
-                class="relative aspect-[1170/2420] bg-white rounded-[1.2rem] overflow-hidden"
-              >
-                <img
-                  src="/app_preview_2.jpg"
-                  alt=""
-                  aria-hidden="true"
-                  class="absolute inset-0 w-full h-full object-cover"
-                  loading="eager"
-                  decoding="async"
-                />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>

@@ -1,4 +1,17 @@
 User-agent: *
 Allow: /
 
+# AI crawlers (Google AI Overviews, ChatGPT, Claude, Perplexity) — explicit allow
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 Sitemap: https://reciplab.com/sitemap-index.xml

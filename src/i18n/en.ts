@@ -5,7 +5,13 @@ const en = {
         "Create recipes from photos, text prompts, or short social media clips with AI.",
     "nav.features": "Features",
     "nav.plans": "Plans",
+    "nav.blog": "Blog",
     "nav.getStarted": "Get Started",
+    "blog.title": "The RecipLab Blog",
+    "blog.subtitle": "Ideas on AI, cooking, and getting recipes out of everything.",
+    "blog.readArticle": "Read article",
+    "blog.backToBlog": "Back to all articles",
+    "blog.relatedTitle": "Keep reading",
     "nav.language": "Language",
     "nav.language.en": "English",
     "nav.language.es": "Español",
@@ -32,6 +38,9 @@ const en = {
     "features.transcription.title": "From social media clips",
     "features.transcription.body":
         "Paste a quick video transcription to recreate the dish with precise steps. Perfect for social media cooking videos you want to try.",
+    "features.web.title": "From web recipes",
+    "features.web.body":
+        "Paste any recipe URL — a food blog, cooking site, or article — and RecipLab extracts ingredients and steps in seconds.",
     "showcase.title": "Experience RecipLab",
     "showcase.subtitle":
         "Beautifully designed interface that makes cooking a joy",

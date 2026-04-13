@@ -1,4 +1,14 @@
 ---
+import translations from "../i18n/translations";
+import { defaultLocale, type Locale } from "../i18n/ui";
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = defaultLocale } = Astro.props;
+const t = translations[lang] ?? translations[defaultLocale];
+const homeHref = `/${lang}/`;
 ---
 
 <footer class="bg-neutral-900 text-neutral-300 py-12">
@@ -6,37 +16,37 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
       <!-- Brand -->
       <div class="col-span-1 md:col-span-2">
-        <a href="/" class="flex items-center space-x-2 mb-4">
-          <img src="/logo-reciplab.png" data-i18n="brand.logoAlt" data-i18n-attr="alt" class="h-8 w-auto" />
-          <span class="text-xl font-bold text-white">RecipLab</span>
+        <a href={homeHref} class="flex items-center space-x-2 mb-4">
+          <img src="/logo-reciplab.png" alt={t["brand.logoAlt"]} class="h-8 w-auto" />
+          <span class="font-display text-xl font-semibold text-white">RecipLab</span>
         </a>
-        <p class="text-neutral-400 max-w-md" data-i18n="footer.description">AI-powered recipe generation from photos, text, and video transcriptions. Cook smarter, not harder.</p>
+        <p class="text-neutral-400 max-w-md">{t["footer.description"]}</p>
       </div>
 
       <!-- Links -->
       <div>
-        <h3 class="text-white font-bold mb-4" data-i18n="footer.product">Product</h3>
+        <h3 class="text-white font-bold mb-4">{t["footer.product"]}</h3>
         <ul class="space-y-2">
-          <li><a href="#features" class="hover:text-primary-500 transition-colors" data-i18n="footer.features">Features</a></li>
-          <li><a href="#plans" class="hover:text-primary-500 transition-colors" data-i18n="footer.plans">Plans</a></li>
-          <li><a href="#cta" class="hover:text-primary-500 transition-colors" data-i18n="footer.download">Download</a></li>
+          <li><a href={`${homeHref}#features`} class="hover:text-primary-500 transition-colors">{t["footer.features"]}</a></li>
+          <li><a href={`${homeHref}#plans`} class="hover:text-primary-500 transition-colors">{t["footer.plans"]}</a></li>
+          <li><a href={`${homeHref}#cta`} class="hover:text-primary-500 transition-colors">{t["footer.download"]}</a></li>
         </ul>
       </div>
 
       <div>
-        <h3 class="text-white font-bold mb-4" data-i18n="footer.legal">Legal</h3>
+        <h3 class="text-white font-bold mb-4">{t["footer.legal"]}</h3>
         <ul class="space-y-2">
-          <li><a href="/privacy" class="hover:text-primary-500 transition-colors" data-i18n="footer.privacy">Privacy Policy</a></li>
-          <li><a href="/terms" class="hover:text-primary-500 transition-colors" data-i18n="footer.terms">Terms of Service</a></li>
-          <li><a href="mailto:support@reciplab.com" class="hover:text-primary-500 transition-colors" data-i18n="footer.contact">Contact</a></li>
+          <li><a href={`/${lang}/privacy/`} class="hover:text-primary-500 transition-colors">{t["footer.privacy"]}</a></li>
+          <li><a href={`/${lang}/terms/`} class="hover:text-primary-500 transition-colors">{t["footer.terms"]}</a></li>
+          <li><a href="mailto:support@reciplab.com" class="hover:text-primary-500 transition-colors">{t["footer.contact"]}</a></li>
         </ul>
       </div>
     </div>
 
     <!-- Bottom Bar -->
     <div class="border-t border-neutral-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-      <p class="text-neutral-500 text-sm mb-4 md:mb-0" data-i18n="footer.copyright">© 2025 RecipLab. All rights reserved.</p>
-      
+      <p class="text-neutral-500 text-sm mb-4 md:mb-0">{t["footer.copyright"]}</p>
+
       <!-- Social Links -->
       <div class="flex space-x-6">
         <a href="https://instagram.com/reciplab" class="text-neutral-400 hover:text-primary-500 transition-colors" aria-label="RecipLab on Instagram">

@@ -2,207 +2,195 @@
 import ScrollAnimations from "../components/ScrollAnimations.astro";
 import CookieConsent from "../components/cookie-consent/CookieConsent.astro";
 import translations from "../i18n/translations";
+import { locales, defaultLocale, ogLocaleMap, hreflangMap, type Locale } from "../i18n/ui";
 
 interface Props {
+	lang?: Locale;
 	title?: string;
 	description?: string;
+	pageKey?: string; // used to build per-locale alternate URLs (e.g. "privacy", "terms", "" for home)
+	structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
-	title = translations.en["meta.title"],
-	description = translations.en["meta.description"],
+	lang = defaultLocale,
+	title,
+	description,
+	pageKey = "",
+	structuredData,
 } = Astro.props;
 
-const defaultLang = "en";
+const dict = translations[lang] ?? translations[defaultLocale];
+const pageTitle = title ?? dict["meta.title"];
+const pageDescription = description ?? dict["meta.description"];
+
+const siteUrl = Astro.site ?? new URL("https://reciplab.com");
+const canonical = new URL(`/${lang}/${pageKey ? pageKey + "/" : ""}`, siteUrl).toString();
+
+const alternates = locales.map((l) => ({
+	lang: l,
+	hreflang: hreflangMap[l],
+	href: new URL(`/${l}/${pageKey ? pageKey + "/" : ""}`, siteUrl).toString(),
+}));
+
+const defaultStructuredData = {
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: "RecipLab",
+	description: pageDescription,
+	applicationCategory: "LifestyleApplication",
+	operatingSystem: "iOS, Android",
+	inLanguage: lang,
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "EUR",
+		availability: "https://schema.org/InStock",
+	},
+	aggregateRating: {
+		"@type": "AggregateRating",
+		ratingValue: "4.9",
+		reviewCount: "10000",
+	},
+	publisher: {
+		"@type": "Organization",
+		name: "RecipLab",
+		url: siteUrl.toString(),
+	},
+};
+
+const jsonLd = structuredData ?? defaultStructuredData;
+
 const translationsJson = encodeURIComponent(JSON.stringify(translations));
 const gaId = import.meta.env.PUBLIC_GA_ID;
 const gtmId = import.meta.env.PUBLIC_GTM_ID || "GTM-NR6H4JTQ";
 const isProd = import.meta.env.PROD;
 const isDev = import.meta.env.DEV;
 const usePartytown = import.meta.env.USE_PARTYTOWN === "true";
-// Enable cookie consent by default; only disable when explicitly set to "false"
 const useCookieConsent = import.meta.env.USE_COOKIECONSENT !== "false";
 const gaInlineScript = `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);} 
+function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 ${useCookieConsent ? "gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied'});" : ""}
 gtag('config', '${gaId}', { anonymize_ip: true });`;
 
-// Build GTM inline snippet server-side to avoid emitting un-evaluated template literals
 const gtmInline = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');`;
 
-// Build translations script server-side to avoid leaving ${...} in output
-const translationsScript = `(() => {
-	const translations = JSON.parse(decodeURIComponent("${translationsJson}"));
-	const supportedLangs = Object.keys(translations);
-	const defaultLang = '${defaultLang}';
+// Client-side switcher: when user changes language via selector, navigate to the localized URL
+// instead of hot-swapping text. That way each locale has its own canonical URL.
+const switcherScript = `(() => {
+	const supported = ${JSON.stringify(locales)};
+	const currentLang = '${lang}';
+	const pageKey = '${pageKey}';
 
-	const getPreferredLang = () => {
-		const stored = localStorage.getItem('reciplab-lang') || localStorage.getItem('lang');
-		if (stored && supportedLangs.includes(stored)) return stored;
-		const browser = navigator.language?.split('-')[0];
-		if (browser && supportedLangs.includes(browser)) return browser;
-		return defaultLang;
+	const switchTo = (target) => {
+		if (!supported.includes(target) || target === currentLang) return;
+		const suffix = pageKey ? pageKey + '/' : '';
+		window.location.href = '/' + target + '/' + suffix;
 	};
 
-	const applyTranslations = (lang) => {
-		const dict = translations[lang] || translations[defaultLang];
-
-		document.querySelectorAll('[data-i18n]').forEach((node) => {
-			const key = node.getAttribute('data-i18n');
-			const value = dict[key] ?? translations[defaultLang][key];
-			if (!value) return;
-			if (node.getAttribute('data-i18n-html') === 'true') {
-				node.innerHTML = value;
-			} else {
-				node.textContent = value;
-			}
-		});
-
-		document.querySelectorAll('[data-i18n-attr]').forEach((node) => {
-			const attr = node.getAttribute('data-i18n-attr');
-			const key = node.getAttribute('data-i18n');
-			const value = dict[key] ?? translations[defaultLang][key];
-			if (value && attr) {
-				node.setAttribute(attr, value);
-			}
-		});
-
-		const metaTitle = dict['meta.title'] || translations[defaultLang]['meta.title'];
-		const metaDescription = dict['meta.description'] || translations[defaultLang]['meta.description'];
-		if (metaTitle) document.title = metaTitle;
-		const descriptionMeta = document.querySelector('meta[name="description"]');
-		if (descriptionMeta && metaDescription) descriptionMeta.setAttribute('content', metaDescription);
-
-		document.documentElement.setAttribute('lang', lang);
-		// Persist language in both legacy and short keys for compatibility
-		localStorage.setItem('reciplab-lang', lang);
-		localStorage.setItem('lang', lang);
-
-		const selector = document.getElementById('language-selector');
-		const mobileSelector = document.getElementById('language-selector-mobile');
-		if (selector && selector.value !== lang) selector.value = lang;
-		if (mobileSelector && mobileSelector.value !== lang) mobileSelector.value = lang;
-
-		if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-			window.gtag('set', 'user_properties', { language: lang });
-		}
+	const bind = (id) => {
+		const el = document.getElementById(id);
+		if (!el) return;
+		if (el.value !== currentLang) el.value = currentLang;
+		el.addEventListener('change', (event) => switchTo(event.target.value));
 	};
 
 	document.addEventListener('DOMContentLoaded', () => {
-		const initialLang = getPreferredLang();
-		applyTranslations(initialLang);
-
-		const bindSelector = (id) => {
-			const element = document.getElementById(id);
-			if (!element) return;
-			element.addEventListener('change', (event) => {
-				const selected = event.target.value;
-				if (supportedLangs.includes(selected)) {
-					applyTranslations(selected);
-				}
-			});
-		};
-
-		bindSelector('language-selector');
-		bindSelector('language-selector-mobile');
+		bind('language-selector');
+		bind('language-selector-mobile');
+		try {
+			localStorage.setItem('reciplab-lang', currentLang);
+			localStorage.setItem('lang', currentLang);
+		} catch (_) {}
+		if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+			window.gtag('set', 'user_properties', { language: currentLang });
+		}
 	});
 })();`;
 ---
 
 <!doctype html>
-<html lang={defaultLang} class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
-		<title>{title}</title>
+		<meta name="description" content={pageDescription} />
+		<title>{pageTitle}</title>
+
+		<!-- Canonical & hreflang -->
+		<link rel="canonical" href={canonical} />
+		{alternates.map((alt) => (
+			<link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+		))}
+		<link rel="alternate" hreflang="x-default" href={new URL(`/${defaultLocale}/${pageKey ? pageKey + "/" : ""}`, siteUrl).toString()} />
 
 		<!-- Open Graph -->
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:url" content={Astro.url} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={pageDescription} />
+		<meta property="og:url" content={canonical} />
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="RecipLab" />
-		<meta property="og:image" content={new URL('/og-image.jpg', Astro.site)} />
+		<meta property="og:locale" content={ogLocaleMap[lang]} />
+		{locales.filter((l) => l !== lang).map((l) => (
+			<meta property="og:locale:alternate" content={ogLocaleMap[l]} />
+		))}
+		<meta property="og:image" content={new URL('/og-image.jpg', siteUrl).toString()} />
 
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site)} />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={pageDescription} />
+		<meta name="twitter:image" content={new URL('/og-image.jpg', siteUrl).toString()} />
 
-		<!-- Canonical -->
-		<link rel="canonical" href={Astro.url} />
+		<!-- Structured data -->
+		<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700&display=swap"
 			rel="stylesheet"
 		/>
 
-		{
-			gtmId && (
-				<>
-					<script is:inline set:html={gtmInline} />
-				</>
-			)
-		}
+		{gtmId && (
+			<script is:inline set:html={gtmInline} />
+		)}
 
-		{
-			(isProd || isDev) && gaId && (
+		{(isProd || isDev) && gaId && (
+			usePartytown ? (
 				<>
-					{usePartytown ? (
-						<>
-							<script
-								is:inline
-								type="text/partytown"
-								src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-							/>
-							<script
-								is:inline
-								type="text/partytown"
-								set:html={gaInlineScript}
-							/>
-						</>
-					) : (
-						<>
-							<script
-								async
-								src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-							/>
-							<script is:inline set:html={gaInlineScript} />
-						</>
-					)}
+					<script is:inline type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+					<script is:inline type="text/partytown" set:html={gaInlineScript} />
+				</>
+			) : (
+				<>
+					<script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+					<script is:inline set:html={gaInlineScript} />
 				</>
 			)
-		}
+		)}
 	</head>
-	<body
-		class="bg-background text-foreground font-['Inter',sans-serif] antialiased"
-	>
-		{
-			gtmId && (
-				<noscript>
-					<iframe
-						src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-						height="0"
-						width="0"
-						style="display:none;visibility:hidden"
-					/>
-				</noscript>
-			)
-		}
+	<body class="bg-background text-foreground font-['Inter',sans-serif] antialiased">
+		{gtmId && (
+			<noscript>
+				<iframe
+					src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+					height="0"
+					width="0"
+					style="display:none;visibility:hidden"
+				/>
+			</noscript>
+		)}
 		<slot />
 		<ScrollAnimations />
 
 		{useCookieConsent && <CookieConsent />}
 
-		<script is:inline set:html={translationsScript} />
+		<script is:inline set:html={switcherScript} />
 	</body>
 </html>
 
@@ -215,5 +203,12 @@ const translationsScript = `(() => {
 		margin: 0;
 		padding: 0;
 		overflow-x: hidden;
+	}
+
+	.font-display {
+		font-family: "Newsreader", ui-serif, Georgia, serif;
+		font-optical-sizing: auto;
+		font-variation-settings: "opsz" 72;
+		letter-spacing: -0.015em;
 	}
 </style>

@@ -1,85 +1,114 @@
 ---
+import translations from "../i18n/translations";
+import { defaultLocale, type Locale } from "../i18n/ui";
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = defaultLocale } = Astro.props;
+const t = translations[lang] ?? translations[defaultLocale];
+
+// Pexels food imagery (CC0-style license, free to use with attribution-optional)
+const PEXELS = {
+  ingredients: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  notebook: "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=1200",
+};
 ---
 
-<section id="features" class="py-24 sm:py-12 bg-surface">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Section Header -->
-    <div class="text-center mb-16 scroll-fade-in">
-      <h2 class="text-4xl sm:text-5xl font-black mb-4 text-primary-600">
-        <span data-i18n="features.title">Generate recipes your way</span>
+<section id="features" class="py-24 lg:py-32 bg-surface">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="max-w-3xl mb-16">
+      <div class="text-sm font-semibold uppercase tracking-[0.2em] text-primary-600 mb-4">
+        {t["nav.features"]}
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-neutral-900 leading-[1.05] mb-6">
+        {t["features.title"]}
       </h2>
-      <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
-        <span data-i18n="features.subtitle">Recipes from photos, text, or social transcriptions - fast, accurate, and tailored to you.</span>
+      <p class="text-lg text-neutral-600 leading-relaxed">
+        {t["features.subtitle"]}
       </p>
     </div>
 
-    <!-- Features Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-      <!-- Feature 1: From Photos -->
-      <div class="group relative scroll-slide-up">
-        <div class="relative bg-gradient-to-br from-primary-50 to-primary-100 rounded-3xl p-8 hover:shadow-card transition-all duration-500 transform hover:-translate-y-2">
-          <!-- Icon -->
-          <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-card">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+    <!-- Bento grid: 4 inputs, asymmetric -->
+    <div class="grid grid-cols-1 md:grid-cols-4 auto-rows-[minmax(200px,auto)] gap-4 md:gap-5">
+      <!-- BIG: From photos — food photography backdrop -->
+      <article class="relative group overflow-hidden rounded-3xl md:col-span-2 md:row-span-2 min-h-[380px] md:min-h-[460px] text-white">
+        <img
+          src={PEXELS.ingredients}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700"
+        />
+        <!-- Terracotta-to-dark overlay -->
+        <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-br from-primary-600/85 via-primary-700/70 to-neutral-900/80"></div>
+        <div aria-hidden="true" class="absolute inset-0 bg-[radial-gradient(circle_at_30%_15%,rgba(255,255,255,0.18),transparent_55%)]"></div>
+
+        <div class="relative h-full p-8 lg:p-10 flex flex-col justify-end">
+          <div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/15 backdrop-blur mb-5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
           </div>
-
-          <!-- Content -->
-          <h3 class="text-2xl font-bold mb-3 text-foreground" data-i18n="features.photo.title">From photos</h3>
-          <p class="text-neutral-700 leading-relaxed" data-i18n="features.photo.body">
-            Snap ingredients or a dish and get a tailored recipe with clear steps. Our AI analyzes your photo and creates personalized cooking instructions.
-          </p>
-
-          <!-- Decorative Element -->
-          <div class="absolute top-4 right-4 w-20 h-20 bg-primary-200 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-500"></div>
+          <h3 class="font-display text-3xl lg:text-4xl font-semibold leading-tight mb-3">{t["features.photo.title"]}</h3>
+          <p class="text-white/85 max-w-md leading-relaxed">{t["features.photo.body"]}</p>
         </div>
-      </div>
+      </article>
 
-      <!-- Feature 2: From Text -->
-      <div class="group relative scroll-slide-up">
-        <div class="relative bg-gradient-to-br from-secondary-50 to-secondary-100 rounded-3xl p-8 hover:shadow-card transition-all duration-500 transform hover:-translate-y-2">
-          <!-- Icon -->
-          <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-card">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+      <!-- From text -->
+      <article class="relative overflow-hidden rounded-3xl bg-neutral-100 p-7 md:col-span-2 flex flex-col justify-between min-h-[200px]">
+        <div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-secondary-500 text-white mb-4">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-display text-2xl font-semibold text-neutral-900 mb-2">{t["features.text.title"]}</h3>
+          <p class="text-sm text-neutral-600 leading-relaxed">{t["features.text.body"]}</p>
+        </div>
+      </article>
+
+      <!-- From video clips — dark -->
+      <article class="relative overflow-hidden rounded-3xl bg-neutral-900 text-white p-7 flex flex-col justify-between min-h-[200px]">
+        <div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 border border-white/20 mb-4">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-display text-2xl font-semibold mb-2">{t["features.transcription.title"]}</h3>
+          <p class="text-sm text-white/70 leading-relaxed">{t["features.transcription.body"]}</p>
+        </div>
+      </article>
+
+      <!-- NEW: From web recipes — notebook photo as subtle backdrop -->
+      <article class="relative group overflow-hidden rounded-3xl min-h-[200px] text-white">
+        <img
+          src={PEXELS.notebook}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700"
+        />
+        <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-br from-secondary-700/90 via-secondary-800/80 to-neutral-900/85"></div>
+
+        <div class="relative h-full p-7 flex flex-col justify-between">
+          <div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/15 backdrop-blur mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"></path>
             </svg>
           </div>
-
-          <!-- Content -->
-          <h3 class="text-2xl font-bold mb-3 text-foreground" data-i18n="features.text.title">From text prompts</h3>
-          <p class="text-neutral-700 leading-relaxed" data-i18n="features.text.body">
-            Describe what you have or crave - RecipLab builds the recipe instantly. Just type your ingredients or desired dish and let AI do the rest.
-          </p>
-
-          <!-- Decorative Element -->
-          <div class="absolute top-4 right-4 w-20 h-20 bg-secondary-200 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-500"></div>
-        </div>
-      </div>
-
-      <!-- Feature 3: From Transcriptions -->
-      <div class="group relative scroll-slide-up">
-        <div class="relative  bg-gradient-to-br from-primary-50 to-primary-100 rounded-3xl p-8 hover:shadow-card transition-all duration-500 transform hover:-translate-y-2">
-          <!-- Icon -->
-          <div class="w-16 h-16  bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-card">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-            </svg>
+          <div>
+            <h3 class="font-display text-2xl font-semibold mb-2">{t["features.web.title"]}</h3>
+            <p class="text-sm text-white/80 leading-relaxed">{t["features.web.body"]}</p>
           </div>
-
-          <!-- Content -->
-          <h3 class="text-2xl font-bold mb-3 text-foreground" data-i18n="features.transcription.title">From short transcriptions</h3>
-          <p class="text-neutral-700 leading-relaxed" data-i18n="features.transcription.body">
-            Paste a quick video transcription to recreate the dish with precise steps. Perfect for social media cooking videos you want to try.
-          </p>
-
-          <!-- Decorative Element -->
-          <div class="absolute top-4 right-4 w-20 h-20 bg-primary-200 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-500"></div>
         </div>
-      </div>
+      </article>
     </div>
-
-
   </div>
 </section>

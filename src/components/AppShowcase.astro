@@ -1,113 +1,78 @@
-<section class="py-24 bg-gradient-to-br from-neutral-50 to-surface overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <!-- Section Header -->
-    <div class="text-center mb-16 scroll-fade-in">
-      <h2 class="text-4xl sm:text-5xl font-black mb-4 text-primary-600">
-        <span data-i18n="showcase.title">Experience RecipLab</span>
-      </h2>
-      <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
-        <span data-i18n="showcase.subtitle">Beautifully designed interface that makes cooking a joy</span>
-      </p>
-    </div>
+---
+import translations from "../i18n/translations";
+import { defaultLocale, type Locale } from "../i18n/ui";
 
-    <!-- Feature Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+interface Props {
+  lang?: Locale;
+}
 
-      <!-- Feature 1 -->
-      <div class="scroll-slide-left">
-        <div class="space-y-6">
-          <div class="inline-block px-4 py-2 bg-primary-100 rounded-full">
-            <span class="text-primary-600 font-semibold text-sm" data-i18n="showcase.smart">Smart Recognition</span>
+const { lang = defaultLocale } = Astro.props;
+const t = translations[lang] ?? translations[defaultLocale];
+
+const blocks = [
+  {
+    eyebrow: t["showcase.smart"],
+    title: t["showcase.snap"],
+    body: t["showcase.snap.body"],
+    points: [t["showcase.snap.point1"], t["showcase.snap.point2"], t["showcase.snap.point3"]],
+    image: "/app_preview_4.jpg",
+    imageAlt: "RecipLab app — ingredient recognition",
+    reverse: false,
+    tint: "primary",
+  },
+  {
+    eyebrow: t["showcase.design"],
+    title: t["showcase.simple"],
+    body: t["showcase.simple.body"],
+    points: [t["showcase.simple.point1"], t["showcase.simple.point2"], t["showcase.simple.point3"]],
+    image: "/app_preview_2.jpg",
+    imageAlt: "RecipLab app — recipe details",
+    reverse: true,
+    tint: "secondary",
+  },
+];
+---
+
+<section class="py-24 lg:py-32 bg-surface">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 space-y-28 lg:space-y-36">
+    {blocks.map((block) => (
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <!-- Copy -->
+        <div class={`lg:col-span-6 ${block.reverse ? "lg:order-2" : ""}`}>
+          <div class={`text-sm font-semibold uppercase tracking-[0.2em] mb-4 ${block.tint === "primary" ? "text-primary-600" : "text-secondary-600"}`}>
+            {block.eyebrow}
           </div>
-          <h3 class="text-3xl md:text-4xl font-bold text-foreground" data-i18n="showcase.snap">Snap, Scan, Cook</h3>
-          <p class="text-lg text-neutral-600 leading-relaxed" data-i18n="showcase.snap.body">
-            Our AI instantly recognizes ingredients from your photos and generates personalized recipes tailored to what you have on hand. No more wondering what to cook!
+          <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-neutral-900 leading-[1.05] mb-6">
+            {block.title}
+          </h3>
+          <p class="text-lg text-neutral-600 leading-relaxed mb-8 max-w-lg">
+            {block.body}
           </p>
           <ul class="space-y-3">
-            <li class="flex items-start space-x-3">
-              <svg class="w-6 h-6 text-success-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-neutral-700" data-i18n="showcase.snap.point1">Instant ingredient recognition</span>
-            </li>
-            <li class="flex items-start space-x-3">
-              <svg class="w-6 h-6 text-success-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-neutral-700" data-i18n="showcase.snap.point2">Personalized recipe suggestions</span>
-            </li>
-            <li class="flex items-start space-x-3">
-              <svg class="w-6 h-6 text-success-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-neutral-700" data-i18n="showcase.snap.point3">Step-by-step instructions</span>
-            </li>
+            {block.points.map((point) => (
+              <li class="flex items-start gap-3">
+                <svg class={`w-5 h-5 flex-shrink-0 mt-0.5 ${block.tint === "primary" ? "text-primary-600" : "text-secondary-600"}`} fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span class="text-neutral-800">{point}</span>
+              </li>
+            ))}
           </ul>
         </div>
-      </div>
 
-      <div class="scroll-slide-right">
-        <div class="relative">
-          <div class="relative w-[300px] md:w-[350px] mx-auto">
-            <div class="relative bg-neutral-900 rounded-[3rem] p-3 shadow-2xl border-8 border-neutral-800 transform hover:scale-105 transition-transform duration-500">
-              <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-neutral-900 rounded-b-3xl z-10"></div>
-              <div class="relative w-full aspect-[9/19] bg-white rounded-[2.5rem] overflow-hidden">
-                <img src="/app_preview_4.jpg" alt="RecipLab App Interface" class="w-full h-full object-cover" />
+        <!-- Device -->
+        <div class={`lg:col-span-6 ${block.reverse ? "lg:order-1" : ""}`}>
+          <div class="relative mx-auto w-[260px] sm:w-[300px] lg:w-full lg:max-w-[380px]">
+            <div aria-hidden="true" class={`absolute inset-0 -m-4 rounded-[3rem] ${block.tint === "primary" ? "bg-primary-100" : "bg-secondary-100"} ${block.reverse ? "-rotate-2" : "rotate-2"}`}></div>
+            <div class="relative bg-neutral-900 rounded-[2.5rem] p-2 shadow-2xl border-[7px] border-neutral-900">
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-neutral-900 rounded-b-2xl z-10"></div>
+              <div class="relative aspect-[9/19] bg-white rounded-[1.75rem] overflow-hidden">
+                <img src={block.image} alt={block.imageAlt} loading="lazy" decoding="async" class="w-full h-full object-cover" />
               </div>
             </div>
           </div>
-          <div class="absolute -top-4 -right-4 bg-gradient-to-br from-primary-500 to-primary-600 text-white px-6 py-3 rounded-2xl shadow-lg animate-float">
-            <div class="text-center">
-              <div class="text-2xl font-bold" data-i18n="showcase.aiBadge.title">AI</div>
-              <div class="text-xs" data-i18n="showcase.aiBadge.label">Trained</div>
-            </div>
-          </div>
-          <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-secondary-300 rounded-full opacity-30 blur-2xl"></div>
         </div>
       </div>
-
-      <!-- Feature 2 (Reversed layout: phone left, text right) -->
-      <div class="scroll-slide-left lg:order-1">
-        <div class="relative">
-          <div class="relative w-[300px] md:w-[350px] mx-auto">
-            <div class="relative bg-neutral-900 rounded-[3rem] p-3 shadow-2xl border-8 border-neutral-800 transform hover:scale-105 transition-transform duration-500">
-              <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-neutral-900 rounded-b-3xl z-10"></div>
-              <div class="relative w-full aspect-[9/19] bg-white rounded-[2.5rem] overflow-hidden">
-                <img src="/app_preview_2.jpg" alt="RecipLab Recipe View" class="w-full h-full object-cover" />
-              </div>
-            </div>
-          </div>
-          <div class="absolute -top-4 -left-4 bg-gradient-to-br from-secondary-500 to-secondary-600 text-white px-6 py-3 rounded-2xl shadow-lg animate-float" style="animation-delay: 0.5s;">
-            <div class="text-center">
-              <div class="text-2xl font-bold" data-i18n="showcase.infiniteBadge.title">Infinite</div>
-              <div class="text-xs" data-i18n="showcase.infiniteBadge.label">Recipes</div>
-            </div>
-          </div>
-          <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-primary-300 rounded-full opacity-30 blur-2xl"></div>
-        </div>
-      </div>
-
-      <div class="scroll-slide-right lg:order-2">
-        <div class="space-y-6">
-          <div class="inline-block px-4 py-2 bg-secondary-100 rounded-full">
-            <span class="text-secondary-600 font-semibold text-sm" data-i18n="showcase.design">Beautiful Interface</span>
-          </div>
-          <h3 class="text-3xl md:text-4xl font-bold text-foreground" data-i18n="showcase.simple">Designed for Simplicity</h3>
-          <p class="text-lg text-neutral-600 leading-relaxed" data-i18n="showcase.simple.body">
-            Clean, intuitive interface that makes recipe discovery and cooking effortless. Every detail crafted for the best user experience.
-          </p>
-          <ul class="space-y-3">
-            <li class="flex items-start space-x-3">
-              <svg class="w-6 h-6 text-success-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-neutral-700" data-i18n="showcase.simple.point1">Easy-to-follow recipe cards</span>
-            </li>
-            <li class="flex items-start space-x-3">
-              <svg class="w-6 h-6 text-success-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-neutral-700" data-i18n="showcase.simple.point2">Save your favorite recipes</span>
-            </li>
-            <li class="flex items-start space-x-3">
-              <svg class="w-6 h-6 text-success-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-neutral-700" data-i18n="showcase.simple.point3">Shopping list integration</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
+    ))}
   </div>
 </section>

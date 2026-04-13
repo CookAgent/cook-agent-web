@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Hero from "../../components/Hero.astro";
+import Features from "../../components/Features.astro";
+import AppShowcase from "../../components/AppShowcase.astro";
+import Plans from "../../components/Plans.astro";
+import CTA from "../../components/CTA.astro";
+import Footer from "../../components/Footer.astro";
+import { locales, type Locale } from "../../i18n/ui";
+
+export function getStaticPaths() {
+	return locales.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+---
+
+<Layout lang={lang}>
+	<Navigation lang={lang} />
+	<Hero lang={lang} />
+	<Features lang={lang} />
+	<AppShowcase lang={lang} />
+	<Plans lang={lang} />
+	<CTA lang={lang} />
+	<Footer lang={lang} />
+</Layout>

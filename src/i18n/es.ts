@@ -5,7 +5,13 @@ const es = {
     "Crea recetas a partir de fotos, indicaciones de texto o videos de redes sociales con IA.",
   "nav.features": "Funciones",
   "nav.plans": "Planes",
+  "nav.blog": "Blog",
   "nav.getStarted": "Empezar",
+  "blog.title": "El blog de RecipLab",
+  "blog.subtitle": "Ideas sobre IA, cocina y cómo sacar una receta de cualquier cosa.",
+  "blog.readArticle": "Leer artículo",
+  "blog.backToBlog": "Volver a todos los artículos",
+  "blog.relatedTitle": "Sigue leyendo",
   "nav.language": "Idioma",
   "nav.language.en": "English",
   "nav.language.es": "Español",
@@ -32,6 +38,9 @@ const es = {
   "features.transcription.title": "Desde videos de redes sociales",
   "features.transcription.body":
     "Pega una transcripción rápida de un video para recrear el plato con pasos precisos. Perfecto para videos de cocina de redes sociales que quieras probar.",
+  "features.web.title": "Desde recetas web",
+  "features.web.body":
+    "Pega la URL de cualquier receta: un blog de comida, una web de cocina o un artículo. RecipLab extrae ingredientes y pasos en segundos.",
   "showcase.title": "Experimenta RecipLab",
   "showcase.subtitle": "Una interfaz bella que hace que cocinar sea un gusto",
   "showcase.smart": "Reconocimiento inteligente",

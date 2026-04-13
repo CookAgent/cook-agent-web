@@ -1,459 +1,95 @@
 ---
+import translations from "../i18n/translations";
+import { defaultLocale, type Locale } from "../i18n/ui";
 
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = defaultLocale } = Astro.props;
+const t = translations[lang] ?? translations[defaultLocale];
+
+type PlanKey = "apprentice" | "sousChef" | "masterChef";
+const plans: Array<{ key: PlanKey; highlight?: boolean }> = [
+  { key: "apprentice" },
+  { key: "sousChef", highlight: true },
+  { key: "masterChef" },
+];
+const items = ["item1", "item2", "item3", "item4", "item5"] as const;
 ---
 
-<section
-  id="plans"
-  class="py-24 bg-gradient-to-br from-neutral-50 to-neutral-100"
->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Section Header -->
-    <div class="text-center mb-16 scroll-fade-in">
-      <h2 class="text-4xl sm:text-5xl font-black mb-4 text-primary-600">
-        <span data-i18n="plans.title">Plans & limits</span>
+<section id="plans" class="py-24 lg:py-32 bg-neutral-100">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <!-- Header -->
+    <div class="max-w-3xl mb-16">
+      <div class="text-sm font-semibold uppercase tracking-[0.2em] text-primary-600 mb-4">
+        {t["nav.plans"]}
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-neutral-900 leading-[1.05] mb-6">
+        {t["plans.title"]}
       </h2>
-      <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
-        <span data-i18n="plans.subtitle"
-          >Choose Free or Pro. Both include recipe generation from photos, text
-          prompts, and short social transcriptions.</span
-        >
+      <p class="text-lg text-neutral-600 leading-relaxed">
+        {t["plans.subtitle"]}
       </p>
     </div>
 
-    <!-- Plans Grid -->
-    <div
-      class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16 stagger-children"
-    >
-      <!-- Apprentice Plan (Free) -->
-      <div
-        class="relative bg-surface rounded-3xl p-8 shadow-card hover:shadow-lg transition-all duration-300 border-2 border-border scroll-slide-left"
-      >
-        <div class="mb-6">
-          <h3
-            class="text-3xl font-bold text-foreground mb-2"
-            data-i18n="plans.apprentice.title"
-          >
-            Apprentice
-          </h3>
-          <div class="flex items-baseline mb-4">
-            <span
-              class="text-5xl font-black text-foreground"
-              data-i18n="plans.apprentice.price">€0</span
-            >
-            <span class="text-neutral-600 ml-2" data-i18n="plans.apprentice.per"
-              >/month</span
-            >
+    <!-- Pricing grid: clean 3-column, highlight via subtle ring, no gradient boxes -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 border border-border rounded-3xl bg-surface overflow-hidden">
+      {plans.map((plan, i) => (
+        <div class={`relative p-8 lg:p-10 flex flex-col ${i > 0 ? "border-t lg:border-t-0 lg:border-l border-border" : ""} ${plan.highlight ? "bg-gradient-to-b from-primary-50/60 to-surface" : ""}`}>
+          {plan.highlight && (
+            <div class="absolute top-6 right-6 px-3 py-1 text-xs font-semibold tracking-wide uppercase rounded-full bg-primary-600 text-white">
+              {t["plans.popular"]}
+            </div>
+          )}
+
+          <div class="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-500 mb-2">
+            {t[`plans.${plan.key}.title`]}
           </div>
-          <p class="text-neutral-600" data-i18n="plans.apprentice.note">
-            Perfect for getting started
-          </p>
-        </div>
-
-        <ul class="space-y-4 mb-8">
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.apprentice.item1"
-              >5 recipes from images/month</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.apprentice.item2"
-              >10 text prompt recipes/month</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.apprentice.item3"
-              >5 video transcriptions/month</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.apprentice.item4"
-              >3 tags maximum</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.apprentice.item5"
-              >1 recipe in queue at a time</span
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- Sous Chef Plan (Most Popular) -->
-      <div
-        class="relative bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl p-8 shadow-lg transform hover:scale-105 transition-all duration-300 scroll-slide-up"
-      >
-        <!-- Popular Badge -->
-        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-          <span
-            class="bg-warning-400 text-neutral-900 px-4 py-1 rounded-full text-sm font-bold shadow-lg"
-            data-i18n="plans.popular">MOST POPULAR</span
-          >
-        </div>
-
-        <div class="mb-6">
-          <h3
-            class="text-3xl font-bold text-white mb-2"
-            data-i18n="plans.sousChef.title"
-          >
-            Sous Chef
-          </h3>
-          <div class="flex items-baseline mb-4">
-            <span
-              class="text-5xl font-black text-white"
-              data-i18n="plans.sousChef.price">€2.99</span
-            >
-            <span class="text-white/90 ml-2" data-i18n="plans.sousChef.per"
-              >/month</span
-            >
+          <div class="flex items-baseline gap-1 mb-3">
+            <span class="font-display text-5xl lg:text-6xl font-semibold text-neutral-900">
+              {t[`plans.${plan.key}.price`]}
+            </span>
+            <span class="text-neutral-500">{t[`plans.${plan.key}.per`]}</span>
           </div>
-          <p class="text-white/90" data-i18n="plans.sousChef.note">
-            For regular home cooks
-          </p>
-        </div>
+          <p class="text-sm text-neutral-600 mb-8">{t[`plans.${plan.key}.note`]}</p>
 
-        <ul class="space-y-4 mb-8">
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-white mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span
-              class="text-white font-semibold"
-              data-i18n="plans.sousChef.item1"
-              >30 recipes from images/month</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-white mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span
-              class="text-white font-semibold"
-              data-i18n="plans.sousChef.item2"
-              >50 text prompt recipes/month</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-white mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-white" data-i18n="plans.sousChef.item3"
-              >30 video transcriptions/month</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-white mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-white" data-i18n="plans.sousChef.item4"
-              >20 tags maximum</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-white mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-white" data-i18n="plans.sousChef.item5"
-              >2 recipes in queue at a time</span
-            >
-          </li>
-        </ul>
-      </div>
+          <ul class="space-y-3 mb-10 flex-1">
+            {items.map((item) => (
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span class="text-sm text-neutral-800">{t[`plans.${plan.key}.${item}`]}</span>
+              </li>
+            ))}
+          </ul>
 
-      <!-- Master Chef Plan -->
-      <div
-        class="relative bg-surface rounded-3xl p-8 shadow-card hover:shadow-lg transition-all duration-300 border-2 border-primary-200 scroll-slide-right"
-      >
-        <div class="mb-6">
-          <h3
-            class="text-3xl font-bold text-foreground mb-2"
-            data-i18n="plans.masterChef.title"
+          <a
+            href="#cta"
+            class={`block text-center w-full py-3.5 rounded-full font-semibold transition-colors ${
+              plan.highlight
+                ? "bg-neutral-900 text-white hover:bg-neutral-800"
+                : "border border-neutral-300 text-neutral-900 hover:border-neutral-900"
+            }`}
           >
-            Master Chef
-          </h3>
-          <div class="flex items-baseline mb-4">
-            <span
-              class="text-5xl font-black text-foreground"
-              data-i18n="plans.masterChef.price">€4.99</span
-            >
-            <span class="text-neutral-600 ml-2" data-i18n="plans.masterChef.per"
-              >/month</span
-            >
-          </div>
-          <p class="text-neutral-600" data-i18n="plans.masterChef.note">
-            For serious home cooks
-          </p>
+            {t[`plans.${plan.key}.cta`]}
+          </a>
         </div>
-
-        <ul class="space-y-4 mb-8">
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.masterChef.item1"
-              >100 recipes from images/month</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.masterChef.item2"
-              >200 text prompt recipes/month</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.masterChef.item3"
-              >100 video transcriptions/month</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.masterChef.item4"
-              >100 tags maximum</span
-            >
-          </li>
-          <li class="flex items-start">
-            <svg
-              class="w-6 h-6 text-success-500 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="text-neutral-700" data-i18n="plans.masterChef.item5"
-              >3 recipes in queue at a time</span
-            >
-          </li>
-        </ul>
-      </div>
+      ))}
     </div>
 
-    <!-- Features List -->
-    <div class="max-w-4xl mx-auto scroll-scale-in">
-      <div class="bg-surface rounded-2xl p-8 shadow-card">
-        <h3
-          class="text-2xl font-bold text-foreground mb-6 text-center"
-          data-i18n="plans.allInclude"
-        >
-          All plans include:
-        </h3>
-        <div class="flex gap-4">
-          <div class="flex items-center space-x-3">
-            <div
-              class="w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center flex-shrink-0"
-            >
-              <svg
-                class="w-5 h-5 text-secondary-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
-            <span class="text-neutral-700" data-i18n="plans.include1"
-              >Personalized recipe outputs</span
-            >
-          </div>
-          <div class="flex items-center space-x-3">
-            <div
-              class="w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center flex-shrink-0"
-            >
-              <svg
-                class="w-5 h-5 text-secondary-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
-            <span class="text-neutral-700" data-i18n="plans.include2"
-              >Ingredient lists & steps</span
-            >
-          </div>
-          <div class="flex items-center space-x-3">
-            <div
-              class="w-8 h-8 bg-success-100 rounded-lg flex items-center justify-center flex-shrink-0"
-            >
-              <svg
-                class="w-5 h-5 text-success-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
-            <span class="text-neutral-700" data-i18n="plans.include3"
-              >Cooking tips & variations</span
-            >
-          </div>
-        </div>
-      </div>
+    <!-- Included-in-all row -->
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-neutral-700">
+      <span class="font-semibold text-neutral-900">{t["plans.allInclude"]}</span>
+      {([1, 2, 3, 4] as const).map((n) => (
+        <span class="inline-flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+          </svg>
+          {t[`plans.include${n}`]}
+        </span>
+      ))}
     </div>
   </div>
 </section>

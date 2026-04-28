@@ -128,10 +128,10 @@ const ca = {
   "brand.logoAlt": "Logotip de RecipLab",
   // Legal content: fallback to English until Catalan legal review is completed.
   "terms.title": "Termes del Servei",
-  "terms.lastUpdated": "Ultima actualitzacio: 3 de desembre de 2025",
+  "terms.lastUpdated": "Última actualització: 28 d'abril de 2026",
   "terms.content": en["terms.content"],
-  "privacy.title": "Politica de privacitat",
-  "privacy.lastUpdated": "Ultima actualitzacio: 3 de desembre de 2025",
+  "privacy.title": "Política de privacitat",
+  "privacy.lastUpdated": "Última actualització: 28 d'abril de 2026",
   "privacy.content": en["privacy.content"],
 };
 

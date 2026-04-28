@@ -122,16 +122,23 @@ const es = {
   "footer.copyright": "© 2025 RecipLab. Todos los derechos reservados.",
   "brand.logoAlt": "Logotipo de RecipLab",
   "terms.title": "Términos del Servicio",
-  "terms.lastUpdated": "Última actualización: 3 de diciembre de 2025",
+  "terms.lastUpdated": "Última actualización: 28 de abril de 2026",
   "terms.content": `
         <h2>1. Aceptación de los Términos</h2>
-        <p>Al acceder o utilizar el sitio web, la aplicación móvil o los servicios de RecipLab (colectivamente, el "Servicio"), usted acepta estar sujeto a estos Términos de Servicio ("Términos"). Si no está de acuerdo con estos Términos, no podrá utilizar el Servicio.</p>
+        <p>Estos Términos del Servicio ("Términos") regulan su acceso y uso del sitio web, la aplicación móvil y los servicios relacionados de RecipLab (colectivamente, el "Servicio"), operados por <strong>Reciplab SL</strong>, con domicilio social en Barcelona, España ("RecipLab", "nosotros" o "nos"). Al acceder o utilizar el Servicio, usted acepta estar sujeto a estos Términos. Si no está de acuerdo, no podrá utilizar el Servicio.</p>
 
         <h2>2. Descripción del Servicio</h2>
         <p>RecipLab proporciona una plataforma de generación y gestión de recetas impulsada por IA. El Servicio permite a los usuarios generar recetas a partir de fotos, texto y videos de redes sociales, crear listas de compras y gestionar planes de comidas.</p>
 
-        <h2>3. Sin Asesoramiento Médico o Nutricional</h2>
-        <p>El contenido proporcionado por RecipLab, incluyendo pero no limitado a información nutricional, listas de ingredientes e instrucciones de cocina, es solo para fines informativos. <strong>RecipLab no es un profesional médico ni nutricional.</strong> No debe confiar en esta información como sustituto, ni reemplaza, el asesoramiento, diagnóstico o tratamiento médico profesional.</p>
+        <h2>3. Contenido Generado por IA y Sin Asesoramiento Médico o Nutricional</h2>
+        <p>Las recetas, listas de ingredientes, información nutricional e instrucciones de cocina proporcionadas por el Servicio son generadas por sistemas de inteligencia artificial y se ofrecen solo con fines informativos y de entretenimiento. <strong>El contenido generado por IA puede ser inexacto, incompleto o inseguro</strong>, incluyendo entre otros:</p>
+        <ul>
+          <li>Cantidades de ingredientes, temperaturas o tiempos de cocción incorrectos que pueden derivar en alimentos poco cocinados o inseguros.</li>
+          <li>No identificación de alérgenos, restricciones dietéticas o interacciones entre ingredientes.</li>
+          <li>Información nutricional o calórica imprecisa.</li>
+          <li>Recetas que combinan ingredientes de forma poco apetitosa, incomestible o insegura.</li>
+        </ul>
+        <p><strong>Usted es el único responsable de verificar la seguridad, exactitud y adecuación de cualquier receta antes de preparar o consumir alimentos basados en ella.</strong> Si tiene alergias, condiciones médicas, restricciones dietéticas, o está embarazada, en período de lactancia o cocinando para niños o personas vulnerables, consulte a un profesional médico o nutricional cualificado antes de confiar en el contenido generado por IA. RecipLab no es un profesional médico ni nutricional y el Servicio no sustituye el asesoramiento, diagnóstico o tratamiento profesional.</p>
 
         <h2>4. Renuncia de Garantías</h2>
         <p class="uppercase font-bold">EL SERVICIO SE PROPORCIONA "TAL CUAL" Y "SEGÚN DISPONIBILIDAD". RECIPLAB RENUNCIA EXPRESAMENTE A TODAS LAS GARANTÍAS DE CUALQUIER TIPO, YA SEAN EXPRESAS O IMPLÍCITAS, INCLUYENDO, PERO NO LIMITADO A, LAS GARANTÍAS IMPLÍCITAS DE COMERCIABILIDAD, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN.</p>
@@ -158,9 +165,11 @@ const es = {
         <h2>6. Cuentas de Usuario y Suscripciones</h2>
         <p>Para acceder a ciertas funciones, es posible que deba crear una cuenta. Usted es responsable de mantener la confidencialidad de su cuenta y contraseña.</p>
         <h3>6.1 Suscripciones</h3>
-        <p>Algunas partes del Servicio se facturan mediante suscripción ("Suscripción(es)"). Se le facturará por adelantado de forma recurrente y periódica (como mensual o anualmente). La facturación es gestionada por nuestro procesador de pagos externo, Stripe.</p>
+        <p>Algunas partes del Servicio se facturan mediante suscripción ("Suscripción(es)"). Se le facturará por adelantado de forma recurrente y periódica (mensual o anualmente).</p>
+        <p><strong>Móvil (iOS):</strong> Las suscripciones contratadas a través de la aplicación de iOS se facturan mediante su ID de Apple a través del sistema de Compras Integradas de Apple. Su suscripción se renueva automáticamente al precio indicado en el momento de la compra hasta que la cancele. Puede cancelar o gestionar su suscripción en <em>Ajustes → ID de Apple → Suscripciones</em> en su iPhone o iPad. La cancelación tendrá efecto al final del período de facturación actual.</p>
+        <p><strong>Web:</strong> Las suscripciones contratadas a través del sitio web se procesan mediante nuestro procesador de pagos y se renuevan automáticamente hasta que las cancele.</p>
         <h3>6.2 Cancelaciones y Reembolsos</h3>
-        <p>Puede cancelar su Suscripción en cualquier momento. La cancelación entrará en vigor al final del período de facturación actual. <strong>Excepto cuando lo exija la ley, las tarifas de Suscripción pagadas no son reembolsables.</strong></p>
+        <p>Puede cancelar su Suscripción en cualquier momento. La cancelación tendrá efecto al final del período de facturación actual. <strong>Excepto cuando lo exija la ley (incluido el derecho de desistimiento de 14 días previsto por la normativa de consumidores de la UE, cuando sea aplicable), las tarifas de Suscripción pagadas no son reembolsables.</strong> Los reembolsos por compras realizadas mediante Compras Integradas de Apple deben solicitarse directamente a Apple en <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>.</p>
 
         <h2>7. Contenido del Usuario</h2>
         <p>Usted conserva la propiedad de cualquier contenido que envíe al Servicio ("Contenido del Usuario"). Sin embargo, al enviar Contenido del Usuario, otorga a RecipLab una licencia mundial, no exclusiva y libre de regalías para usar, reproducir, modificar, adaptar, publicar, traducir y distribuir dicho Contenido del Usuario con el fin de operar y mejorar el Servicio.</p>
@@ -172,81 +181,124 @@ const es = {
         <p>RecipLab se reserva el derecho en cualquier momento de modificar o interrumpir, temporal o permanentemente, el Servicio (o cualquier parte del mismo) con o sin previo aviso. Usted acepta que RecipLab no será responsable ante usted ni ante ningún tercero por cualquier modificación, suspensión o interrupción del Servicio.</p>
 
         <h2>10. Ley Aplicable</h2>
-        <p>Estos Términos se regirán e interpretarán de acuerdo con las leyes de la jurisdicción en la que opera RecipLab, sin tener en cuenta sus disposiciones sobre conflictos de leyes.</p>
+        <p>Estos Términos se rigen por la ley española, sin tener en cuenta sus disposiciones sobre conflictos de leyes. Cualquier controversia que surja en relación con estos Términos se someterá a la jurisdicción exclusiva de los tribunales de Barcelona, España, salvo cuando la legislación de protección al consumidor disponga lo contrario para usuarios que actúen como consumidores.</p>
 
         <h2>11. Contáctenos</h2>
-        <p>Si tiene alguna pregunta sobre estos Términos, contáctenos.</p>
+        <p>Para cualquier consulta sobre estos Términos, puede contactarnos en:</p>
+        <ul>
+          <li><strong>Reciplab SL</strong></li>
+          <li>Barcelona, España</li>
+          <li>Correo: <a href="mailto:reciplab.info@gmail.com">reciplab.info@gmail.com</a></li>
+        </ul>
     `,
   "privacy.title": "Política de Privacidad",
-  "privacy.lastUpdated": "Última actualización: 3 de diciembre de 2025",
+  "privacy.lastUpdated": "Última actualización: 28 de abril de 2026",
   "privacy.content": `
         <h2>1. Introducción</h2>
-        <p>RecipLab ("nosotros", "nuestro" o "nos") respeta su privacidad y se compromete a proteger sus datos personales. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos su información cuando utiliza nuestro sitio web y aplicación móvil (el "Servicio").</p>
+        <p>Esta Política de Privacidad explica cómo RecipLab recopila, usa, divulga y protege sus datos personales cuando utiliza nuestro sitio web y aplicación móvil (el "Servicio"). Cumplimos con el Reglamento General de Protección de Datos de la UE (RGPD) y con la Ley Orgánica 3/2018 de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD).</p>
 
-        <h2>2. Información que Recopilamos</h2>
-        <h3>2.1 Datos Personales</h3>
+        <h2>2. Responsable del Tratamiento</h2>
+        <p>El responsable del tratamiento de sus datos personales es:</p>
+        <ul>
+          <li><strong>Reciplab SL</strong></li>
+          <li>Barcelona, España</li>
+          <li>Correo: <a href="mailto:reciplab.info@gmail.com">reciplab.info@gmail.com</a></li>
+        </ul>
+        <p>Puede contactarnos en cualquier momento mediante el correo anterior para consultas sobre esta Política o para ejercer sus derechos (véase Sección 9).</p>
+
+        <h2>3. Información que Recopilamos</h2>
+        <h3>3.1 Datos Personales</h3>
         <p>Podemos recopilar información de identificación personal, como:</p>
         <ul>
-          <li>Nombre y dirección de correo electrónico (a través de autenticación Clerk)</li>
+          <li>Nombre y dirección de correo electrónico (a través de la autenticación Clerk)</li>
           <li>Información de perfil</li>
-          <li>Información de pago (procesada de forma segura por Stripe; no almacenamos detalles completos de la tarjeta de crédito)</li>
+          <li>Estado de suscripción y compra (no recibimos ni almacenamos los datos de su tarjeta — los pagos en iOS los gestiona Apple, y los pagos web nuestro procesador de pagos)</li>
         </ul>
 
-        <h3>2.2 Datos de Uso</h3>
+        <h3>3.2 Datos de Uso</h3>
         <p>Podemos recopilar información sobre sus interacciones con el Servicio, incluyendo:</p>
         <ul>
           <li>Recetas generadas y guardadas</li>
           <li>Listas de compras creadas</li>
-          <li>Información del dispositivo (dirección IP, tipo de navegador, sistema operativo)</li>
-          <li>Datos de registro y patrones de uso</li>
+          <li>Información del dispositivo (dirección IP, navegador, sistema operativo, identificadores de dispositivo)</li>
+          <li>Registros, informes de errores y patrones de uso</li>
         </ul>
 
-        <h3>2.3 Datos de Contenido</h3>
-        <p>Recopilamos las fotos, videos y texto que sube para la generación de recetas. Este contenido es procesado por nuestros proveedores de IA para ofrecer el Servicio.</p>
+        <h3>3.3 Datos de Contenido</h3>
+        <p>Recopilamos las fotos, vídeos y texto que sube para la generación de recetas. Este contenido es procesado por nuestros proveedores de IA para ofrecer el Servicio.</p>
 
-        <h2>3. Cómo Usamos Su Información</h2>
-        <p>Usamos la información que recopilamos para:</p>
+        <h2>4. Cómo Usamos Su Información y Bases Legales (RGPD Art. 6)</h2>
+        <p>Tratamos sus datos personales sobre las siguientes bases jurídicas:</p>
         <ul>
-          <li>Proporcionar, operar y mantener el Servicio</li>
-          <li>Mejorar, personalizar y expandir el Servicio</li>
-          <li>Procesar transacciones y gestionar suscripciones</li>
-          <li>Comunicarnos con usted, incluso para servicio al cliente y actualizaciones</li>
-          <li>Detectar y prevenir fraudes</li>
-          <li>Entrenar y mejorar nuestros modelos de IA (usando datos anonimizados)</li>
+          <li><strong>Ejecución de contrato (Art. 6.1.b):</strong> para proporcionar, operar y mantener el Servicio; gestionar suscripciones; generar recetas a partir de sus entradas.</li>
+          <li><strong>Interés legítimo (Art. 6.1.f):</strong> para mejorar, asegurar y personalizar el Servicio; detectar y prevenir fraudes y abusos; producir analíticas agregadas/anonimizadas.</li>
+          <li><strong>Consentimiento (Art. 6.1.a):</strong> para analítica opcional, comunicaciones de marketing y (cuando proceda) cookies que requieran consentimiento. Puede retirar el consentimiento en cualquier momento.</li>
+          <li><strong>Obligación legal (Art. 6.1.c):</strong> para cumplir con obligaciones fiscales, contables y otras obligaciones legales.</li>
         </ul>
+        <p>No utilizamos su contenido privado (recetas, fotos) para entrenar modelos genéricos de IA de terceros. Los datos de uso anonimizados y agregados pueden utilizarse para mejorar el Servicio.</p>
 
-        <h2>4. Divulgación de Su Información</h2>
-        <p>Podemos compartir su información con:</p>
+        <h2>5. Encargados del Tratamiento (Subprocesadores)</h2>
+        <p>Nos apoyamos en los siguientes proveedores externos para operar el Servicio. Cada uno está vinculado por un Acuerdo de Tratamiento de Datos y trata sus datos solo siguiendo nuestras instrucciones:</p>
         <ul>
-          <li><strong>Proveedores de Servicios:</strong> Utilizamos proveedores externos para realizar servicios en nuestro nombre, como procesamiento de pagos (Stripe), autenticación (Clerk) y alojamiento en la nube.</li>
-          <li><strong>Requisitos Legales:</strong> Podemos divulgar su información si así lo exige la ley o en respuesta a solicitudes válidas de autoridades públicas.</li>
-          <li><strong>Transferencias Comerciales:</strong> En relación con cualquier fusión, venta de activos de la empresa, financiación o adquisición de todo o una parte de nuestro negocio a otra empresa.</li>
+          <li><strong>Clerk</strong> (EE. UU.) — autenticación, gestión de cuentas.</li>
+          <li><strong>RevenueCat</strong> (EE. UU.) — gestión de suscripciones móviles.</li>
+          <li><strong>Apple Inc.</strong> (EE. UU. / Irlanda) — procesamiento de Compras Integradas en iOS.</li>
+          <li><strong>OpenAI</strong> (EE. UU.) — generación de recetas por IA a partir de sus entradas (texto, imágenes, transcripciones).</li>
+          <li><strong>Sentry</strong> (EE. UU.) — monitorización de errores e informes de fallos.</li>
+          <li><strong>Hetzner</strong> (Alemania / UE) — alojamiento y almacenamiento en la nube.</li>
         </ul>
+        <p>También podemos divulgar su información cuando lo exija la ley, en respuesta a solicitudes válidas de autoridades públicas, o en relación con una fusión, venta o adquisición total o parcial de nuestro negocio.</p>
 
-        <h2>5. Seguridad de Datos</h2>
-        <p>Implementamos medidas de seguridad técnicas y organizativas adecuadas para proteger su información personal. Sin embargo, tenga en cuenta que ningún método de transmisión a través de Internet o método de almacenamiento electrónico es 100% seguro.</p>
-
-        <h2>6. Servicios de Terceros</h2>
-        <p>El Servicio puede contener enlaces a sitios web o servicios de terceros que no son propiedad ni están controlados por RecipLab. No somos responsables de las prácticas de privacidad de dichos terceros.</p>
-
-        <h2>7. Privacidad de los Niños</h2>
-        <p>El Servicio no está destinado a niños menores de 13 años. No recopilamos a sabiendas información personal de niños menores de 13 años.</p>
-
-        <h2>8. Sus Derechos de Datos</h2>
-        <p>Dependiendo de su ubicación, puede tener derecho a:</p>
+        <h2>6. Transferencias Internacionales de Datos</h2>
+        <p>Algunos de nuestros proveedores se encuentran fuera del Espacio Económico Europeo (EEE), principalmente en Estados Unidos. Cuando transferimos sus datos personales fuera del EEE, aplicamos las garantías apropiadas previstas en el Capítulo V del RGPD, incluyendo:</p>
         <ul>
-          <li>Acceder a los datos personales que tenemos sobre usted.</li>
-          <li>Solicitar la corrección de datos inexactos.</li>
-          <li>Solicitar la eliminación de sus datos personales.</li>
-          <li>Oponerse o restringir el procesamiento de sus datos.</li>
+          <li>El <strong>Marco de Privacidad de Datos UE-EE. UU.</strong> para los proveedores estadounidenses certificados.</li>
+          <li><strong>Cláusulas Contractuales Tipo (CCT)</strong> aprobadas por la Comisión Europea para transferencias a proveedores no cubiertos por una decisión de adecuación.</li>
+          <li>Medidas técnicas y organizativas complementarias cuando sea necesario.</li>
         </ul>
-        <p>Para ejercer estos derechos, contáctenos.</p>
+        <p>Puede solicitar una copia del mecanismo de transferencia aplicable contactándonos en la dirección anterior.</p>
 
-        <h2>9. Cambios a Esta Política de Privacidad</h2>
-        <p>Podemos actualizar nuestra Política de Privacidad de vez en cuando. Le notificaremos cualquier cambio publicando la nueva Política de Privacidad en esta página.</p>
+        <h2>7. Conservación de Datos</h2>
+        <p>Conservamos sus datos personales únicamente durante el tiempo necesario para los fines descritos en esta Política:</p>
+        <ul>
+          <li>Datos de cuenta y perfil: mientras su cuenta esté activa y hasta 30 días después de su eliminación para permitir la recuperación y por motivos de seguridad/auditoría.</li>
+          <li>Datos de recetas y contenido: eliminados en un plazo de 30 días tras la eliminación de la cuenta.</li>
+          <li>Registros de suscripción/facturación: conservados según lo exigido por la legislación fiscal y contable española (normalmente 6 años).</li>
+          <li>Registros de errores y analíticas: anonimizados o eliminados en un plazo de 90 días.</li>
+        </ul>
 
-        <h2>10. Contáctenos</h2>
-        <p>Si tiene alguna pregunta sobre esta Política de Privacidad, contáctenos.</p>
+        <h2>8. Seguridad de Datos</h2>
+        <p>Implementamos medidas de seguridad técnicas y organizativas adecuadas para proteger su información personal, incluyendo cifrado en tránsito (TLS), controles de acceso y revisión periódica de seguridad. Ningún método de transmisión por Internet es 100% seguro; no podemos garantizar una seguridad absoluta.</p>
+
+        <h2>9. Sus Derechos</h2>
+        <p>Conforme al RGPD, usted tiene derecho a:</p>
+        <ul>
+          <li><strong>Acceder</strong> a los datos personales que tenemos sobre usted.</li>
+          <li><strong>Rectificar</strong> datos inexactos o incompletos.</li>
+          <li><strong>Suprimir</strong> sus datos personales ("derecho al olvido"). Puede eliminar su cuenta directamente en la app, en <em>Perfil → Eliminar cuenta</em>.</li>
+          <li><strong>Limitar</strong> u <strong>oponerse</strong> al tratamiento.</li>
+          <li><strong>Portabilidad</strong> — recibir sus datos en un formato estructurado y legible por máquina.</li>
+          <li><strong>Retirar el consentimiento</strong> en cualquier momento, cuando el tratamiento se base en él.</li>
+          <li><strong>Presentar una reclamación</strong> ante la Agencia Española de Protección de Datos (<a href="https://www.aepd.es">AEPD</a>) o su autoridad de control local.</li>
+        </ul>
+        <p>Para ejercer estos derechos, contáctenos en <a href="mailto:reciplab.info@gmail.com">reciplab.info@gmail.com</a>. Responderemos en el plazo de un mes.</p>
+
+        <h2>10. Privacidad de los Menores</h2>
+        <p>El Servicio no está destinado a menores de 13 años. No recopilamos a sabiendas datos personales de menores de 13 años. Si tiene constancia de que un menor nos ha proporcionado datos personales sin consentimiento parental, contáctenos para que podamos eliminarlos.</p>
+
+        <h2>11. Enlaces a Terceros</h2>
+        <p>El Servicio puede contener enlaces a sitios web de terceros que no son propiedad ni están controlados por RecipLab. No somos responsables de las prácticas de privacidad de dichos terceros.</p>
+
+        <h2>12. Cambios a Esta Política</h2>
+        <p>Podemos actualizar esta Política de Privacidad de vez en cuando. Le notificaremos cualquier cambio sustancial publicando la nueva Política en esta página y actualizando la fecha de "Última actualización".</p>
+
+        <h2>13. Contáctenos</h2>
+        <p>Para consultas sobre esta Política de Privacidad o para ejercer sus derechos:</p>
+        <ul>
+          <li><strong>Reciplab SL</strong></li>
+          <li>Barcelona, España</li>
+          <li>Correo: <a href="mailto:reciplab.info@gmail.com">reciplab.info@gmail.com</a></li>
+        </ul>
     `,
 
 };
